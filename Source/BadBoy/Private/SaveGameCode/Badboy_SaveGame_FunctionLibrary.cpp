@@ -28,6 +28,12 @@ FUMoveUnlockStruct UBadboy_SaveGame_FunctionLibrary::SetMoveUnlocked(bool comple
 	return MoveStruct;
 }
 
+FULevelCompletionStruct UBadboy_SaveGame_FunctionLibrary::SetRecordFoodWad(TArray<FUFoodDataStruct> recordWad, FULevelCompletionStruct LevelStruct)
+{
+	LevelStruct.recordFoodwad = recordWad;
+	return LevelStruct;
+}
+
 bool UBadboy_SaveGame_FunctionLibrary::FindLevelInEpisode(FString LevelName, FUEpisode Episode, FULevelCompletionStruct& LevelStruct)
 {
 	if (Episode.Levels.Contains(LevelName))
@@ -57,7 +63,34 @@ bool UBadboy_SaveGame_FunctionLibrary::FindLevelInListOfEpisodes(FString LevelNa
 	return false;
 }
 
-bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten)
+bool UBadboy_SaveGame_FunctionLibrary::CheckToUseNewFoodWad(TArray<FUFoodDataStruct> currentWad, TArray<FUFoodDataStruct> newWad)
+{
+	if (currentWad.IsEmpty()) {
+		return true;
+	}
+
+	int currentWadHP = 0;
+	int newWadHP = 0;
+
+	for (FUFoodDataStruct foodItem : currentWad) 
+	{
+		currentWadHP += foodItem.HealValue;
+	}
+
+	for (FUFoodDataStruct foodItem : newWad)
+	{
+		newWadHP += foodItem.HealValue;
+	}
+
+	if (newWadHP > currentWadHP) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FUFoodDataStruct> recordWad)
 {
 	//first find the level
 	FULevelCompletionStruct lvlStr;
@@ -76,6 +109,9 @@ bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString Level
 
 		if (BeefyBarEaten)
 			lvlStr = SetBarEaten(true, lvlStr);
+
+		if(CheckToUseNewFoodWad(lvlStr.recordFoodwad, recordWad))
+			lvlStr = SetRecordFoodWad(recordWad, lvlStr);
 
 		//update the episode
 		FUEpisode tempEp = Episodes[epName];

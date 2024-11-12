@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/UserDefinedStruct.h"
+#include <FoodDataStruct.h>
 #include "LevelCompletionStruct_C.generated.h"
 
 /**
@@ -22,4 +23,7 @@ struct BADBOY_API FULevelCompletionStruct
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool beefyBarEaten = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FUFoodDataStruct> recordFoodwad = {};
 };
