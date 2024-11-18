@@ -26,4 +26,7 @@ struct BADBOY_API FULevelCompletionStruct
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FUFoodDataStruct> recordFoodwad = {};
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float recordHanger = 0;
 };

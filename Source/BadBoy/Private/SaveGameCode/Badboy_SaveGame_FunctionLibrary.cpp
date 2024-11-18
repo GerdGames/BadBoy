@@ -34,6 +34,12 @@ FULevelCompletionStruct UBadboy_SaveGame_FunctionLibrary::SetRecordFoodWad(TArra
 	return LevelStruct;
 }
 
+FULevelCompletionStruct UBadboy_SaveGame_FunctionLibrary::SetRecordHanger(float recordHanger, FULevelCompletionStruct LevelStruct)
+{
+	LevelStruct.recordHanger = recordHanger;
+	return LevelStruct;
+}
+
 bool UBadboy_SaveGame_FunctionLibrary::FindLevelInEpisode(FString LevelName, FUEpisode Episode, FULevelCompletionStruct& LevelStruct)
 {
 	if (Episode.Levels.Contains(LevelName))
@@ -90,7 +96,7 @@ bool UBadboy_SaveGame_FunctionLibrary::CheckToUseNewFoodWad(TArray<FUFoodDataStr
 	}
 }
 
-bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FUFoodDataStruct> recordWad)
+bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FUFoodDataStruct> recordWad, float recordHanger)
 {
 	//first find the level
 	FULevelCompletionStruct lvlStr;
@@ -112,6 +118,9 @@ bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString Level
 
 		if(CheckToUseNewFoodWad(lvlStr.recordFoodwad, recordWad))
 			lvlStr = SetRecordFoodWad(recordWad, lvlStr);
+
+		if (recordHanger > lvlStr.recordHanger)
+			lvlStr = SetRecordHanger(recordHanger, lvlStr);
 
 		//update the episode
 		FUEpisode tempEp = Episodes[epName];
