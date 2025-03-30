@@ -27,12 +27,16 @@ class BADBOY_API UBadboy_SaveGame_FunctionLibrary : public UBlueprintFunctionLib
 		static FULevelCompletionStruct SetBarEaten(bool completion, FULevelCompletionStruct LevelStruct);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Record Food Wad"), Category = "SaveGame")
-
 		static FULevelCompletionStruct SetRecordFoodWad(TArray<FUFoodDataStruct> recordWad, FULevelCompletionStruct LevelStruct);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Record Hanger"), Category = "SaveGame")
-		
+		static FULevelCompletionStruct SetRecordWadGrowth(float recordWadGrowth, FULevelCompletionStruct LevelStruct);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Record Hanger"), Category = "SaveGame")
 		static FULevelCompletionStruct SetRecordHanger(float recordHanger, FULevelCompletionStruct LevelStruct);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Record Time"), Category = "SaveGame")
+		static FULevelCompletionStruct SetRecordTime(float recordTime, FULevelCompletionStruct LevelStruct);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Move Unlocked"), Category = "SaveGame")
 		static FUMoveUnlockStruct SetMoveUnlocked(bool completion, FUMoveUnlockStruct MoveStruct);
@@ -44,9 +48,8 @@ class BADBOY_API UBadboy_SaveGame_FunctionLibrary : public UBlueprintFunctionLib
 		static bool FindLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, FString& EpisodeName, FULevelCompletionStruct& LevelStruct);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Check To Use New FoodWad"), Category = "SaveGame")
-
 		static bool CheckToUseNewFoodWad(TArray<FUFoodDataStruct> currentWad, TArray<FUFoodDataStruct> newWad);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Update Level in List of Episodes"), Category = "SaveGame")
-		static bool UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FUFoodDataStruct> recordWad, float recordHanger);
+		static bool UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FUFoodDataStruct> recordWad, float recordWadGrowth, float recordHanger, float recordTime);
 };

@@ -18,9 +18,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FTimerHandle LevelTimerHandle;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int StartingRestoration;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int EndingRestoration;
+
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Start Level Scoring"), Category = "Score")
-	void startLevelScoring();
+	void startLevelScoring(int startRestoration);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "End Level Scoring"), Category = "Score")
-	void endLevelScoring();
+	void endLevelScoring(int endRestoration);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Food Wad Growth"), Category = "Score")
+	int getFoodWadGrowth();
 };
