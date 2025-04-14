@@ -28,7 +28,7 @@ FUMoveUnlockStruct UBadboy_SaveGame_FunctionLibrary::SetMoveUnlocked(bool comple
 	return MoveStruct;
 }
 
-FULevelCompletionStruct UBadboy_SaveGame_FunctionLibrary::SetRecordFoodWad(TArray<FUFoodDataStruct> recordWad, FULevelCompletionStruct LevelStruct)
+FULevelCompletionStruct UBadboy_SaveGame_FunctionLibrary::SetRecordFoodWad(TArray<FName> recordWad, FULevelCompletionStruct LevelStruct)
 {
 	LevelStruct.recordFoodwad = recordWad;
 	return LevelStruct;
@@ -81,9 +81,9 @@ bool UBadboy_SaveGame_FunctionLibrary::FindLevelInListOfEpisodes(FString LevelNa
 	return false;
 }
 
-bool UBadboy_SaveGame_FunctionLibrary::CheckToUseNewFoodWad(TArray<FUFoodDataStruct> currentWad, TArray<FUFoodDataStruct> newWad)
+bool UBadboy_SaveGame_FunctionLibrary::CheckToUseNewFoodWad(TArray<FName> currentWad, TArray<FName> newWad)
 {
-	if (currentWad.IsEmpty()) {
+	/*if (currentWad.IsEmpty()) {
 		return true;
 	}
 
@@ -105,10 +105,12 @@ bool UBadboy_SaveGame_FunctionLibrary::CheckToUseNewFoodWad(TArray<FUFoodDataStr
 	}
 	else {
 		return false;
-	}
+	}*/
+
+	return true;
 }
 
-bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FUFoodDataStruct> recordWad, float recordWadGrowth, float recordHanger, float recordTime)
+bool UBadboy_SaveGame_FunctionLibrary::UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FName> recordWad, float recordWadGrowth, float recordHanger, float recordTime)
 {
 	//first find the level
 	FULevelCompletionStruct lvlStr;

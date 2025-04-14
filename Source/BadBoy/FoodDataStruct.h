@@ -9,6 +9,9 @@ struct BADBOY_API FUFoodDataStruct
 {
 	GENERATED_BODY()
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "FoodName", MakeStructureDefaultValue = "Taco"))
+	FName FoodName;
+
 	/** Please add a variable description */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Mesh", MakeStructureDefaultValue = "/Script/Engine.StaticMesh'/Game/Art/Models/Food/Taco.Taco'"))
 	TObjectPtr<UStaticMesh> Mesh;
@@ -16,5 +19,6 @@ struct BADBOY_API FUFoodDataStruct
 	/** Please add a variable description */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "HealValue", MakeStructureDefaultValue = "2.000000"))
 	double HealValue;
+
 
 };

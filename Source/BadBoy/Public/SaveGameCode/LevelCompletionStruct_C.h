@@ -25,7 +25,7 @@ struct BADBOY_API FULevelCompletionStruct
 	bool beefyBarEaten = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<FUFoodDataStruct> recordFoodwad = {};
+	TArray<FName> recordFoodwad = {};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float recordWadGrowth = 0;
