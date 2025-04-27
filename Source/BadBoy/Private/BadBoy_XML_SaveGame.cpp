@@ -275,6 +275,9 @@ void UBadBoy_XML_SaveGame::SetLevel(FString levelName, FString episodeName, FULe
 		FXmlNode* timeTag = TryGetChildNode(levelTag, "Time");
 		timeTag->SetContent(FString::SanitizeFloat(levelStruct.recordTime));
 
+		FXmlNode* collectablesTag = TryGetChildNode(levelTag, "Collectables");
+		collectablesTag->SetContent(FString::SanitizeFloat(levelStruct.collectables));
+
 		FXmlNode* wadTag = TryGetChildNode(levelTag, "FoodWad");
 
 		FString foodList = "";
@@ -338,6 +341,9 @@ FULevelCompletionStruct UBadBoy_XML_SaveGame::GetLevel(FString levelName, FStrin
 
 		FXmlNode* timeTag = TryGetChildNode(levelTag, "Time", "0.0");
 		levelStruct.recordTime = FCString::Atof(*timeTag->GetContent());
+
+		FXmlNode* collectablesTag = TryGetChildNode(levelTag, "Collectables", "0.0");
+		levelStruct.collectables = FCString::Atoi(*collectablesTag->GetContent());
 
 		FXmlNode* wadTag = TryGetChildNode(levelTag, "FoodWad");
 

@@ -38,6 +38,9 @@ class BADBOY_API UBadboy_SaveGame_FunctionLibrary : public UBlueprintFunctionLib
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Record Time"), Category = "SaveGame")
 		static FULevelCompletionStruct SetRecordTime(float recordTime, FULevelCompletionStruct LevelStruct);
 
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Collectables"), Category = "SaveGame")
+		static FULevelCompletionStruct SetCollectables(int collectables, FULevelCompletionStruct LevelStruct);
+
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Move Unlocked"), Category = "SaveGame")
 		static FUMoveUnlockStruct SetMoveUnlocked(bool completion, FUMoveUnlockStruct MoveStruct);
 
@@ -51,5 +54,5 @@ class BADBOY_API UBadboy_SaveGame_FunctionLibrary : public UBlueprintFunctionLib
 		static bool CheckToUseNewFoodWad(TArray<FName> currentWad, TArray<FName> newWad);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Update Level in List of Episodes"), Category = "SaveGame")
-		static bool UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FName> recordWad, float recordWadGrowth, float recordHanger, float recordTime);
+		static bool UpdateLevelInListOfEpisodes(FString LevelName, TMap<FString, FUEpisode> Episodes, TMap<FString, FUEpisode>& EpisodesUpdated, bool Completed, bool Unlocked, bool BeefyBarEaten, TArray<FName> recordWad, float recordWadGrowth, float recordHanger, float recordTime, int recordCollectableCount);
 };

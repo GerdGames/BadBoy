@@ -35,4 +35,7 @@ struct BADBOY_API FULevelCompletionStruct
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float recordTime = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int collectables = 0;
 };

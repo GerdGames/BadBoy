@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int EndingRestoration;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int Collectables;
+
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Start Level Scoring"), Category = "Score")
 	void startLevelScoring(int startRestoration);
 

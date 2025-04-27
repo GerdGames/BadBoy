@@ -6,16 +6,17 @@
 void ALevelGameMode::startLevelScoring(int startRestoration)
 {
 	//start timer
-	GetWorld()->GetTimerManager().SetTimer(LevelTimerHandle, 3600.0, false);
+	//GetWorld()->GetTimerManager().SetTimer(LevelTimerHandle, 3600.0, false);
 
 	//set starting restoration
 	StartingRestoration = startRestoration;
+	Collectables = 0;
 }
 
 void ALevelGameMode::endLevelScoring(int endRestoration)
 {
 	//stop timer
-	GetWorld()->GetTimerManager().PauseTimer(LevelTimerHandle);
+	//GetWorld()->GetTimerManager().PauseTimer(LevelTimerHandle);
 
 	//set ending restoration
 	EndingRestoration = endRestoration;
