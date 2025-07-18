@@ -113,22 +113,24 @@ AActor* ULockOnRegistrySubsystem::getClosestTargetInDirection(AActor* StartActor
 
 	for (AActor* actor : viableTargets)
 	{
-		FVector VectorToActor = (actor->GetActorLocation() - searchStart);
-		VectorToActor.Normalize();
-
-		float angle = getAngleDifferenceBetween2Vectors(VectorToActor, SearchDirection);
-
-		if (angle <= angleTolerance)
+		if (actor != StartActor)
 		{
-			double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+			FVector VectorToActor = (actor->GetActorLocation() - searchStart);
+			VectorToActor.Normalize();
 
-			if (distance < bestDistance)
+			float angle = getAngleDifferenceBetween2Vectors(VectorToActor, SearchDirection);
+
+			if (angle <= angleTolerance)
 			{
-				bestDistance = distance;
-				bestFit = actor;
+				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+
+				if (distance < bestDistance)
+				{
+					bestDistance = distance;
+					bestFit = actor;
+				}
 			}
 		}
-		
 	}
 
 	return bestFit;
@@ -170,6 +172,22 @@ TArray<AActor*> ULockOnRegistrySubsystem::getViableLockOnTargets(FVector searchS
 	}
 
 	return ViableTargets;
+}
+
+
+TArray<AActor*> ULockOnRegistrySubsystem::getPriorityTargets()
+{
+	TArray<AActor*> PriorityTargets = TArray<AActor*>();
+
+	for (LockOnEntry* entry : LockOnActors)
+	{
+		if (entry->priority)
+		{
+			PriorityTargets.Add(entry->actor);
+		}
+	}
+
+	return PriorityTargets;
 }
 
 float ULockOnRegistrySubsystem::getAngleDifferenceBetween2Vectors(FVector vector1, FVector vector2)

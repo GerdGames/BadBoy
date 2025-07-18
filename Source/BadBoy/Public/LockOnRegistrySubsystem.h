@@ -42,8 +42,11 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Closest LockOn Target In Direction"), Category = "Lock On")
 	AActor* getClosestTargetInDirection(AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetViable LockOn Targets"), Category = "Lock On")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Viable LockOn Targets"), Category = "Lock On")
 	TArray<AActor*> getViableLockOnTargets(FVector searchStart, float maxDistance);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Priority LockOn Targets"), Category = "Lock On")
+	TArray<AActor*> getPriorityTargets();
 
 	float getAngleDifferenceBetween2Vectors(FVector vector1, FVector vector2);
 };
