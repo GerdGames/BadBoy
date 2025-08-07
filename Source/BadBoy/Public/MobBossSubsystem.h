@@ -16,8 +16,8 @@ class BADBOY_API UMobBossSubsystem : public UWorldSubsystem
 	GENERATED_BODY()
 
 private:
-	int attackTokenCount = 2;
-	int maxAttackTokens = 2;
+	int attackTokenCount = 1;
+	int maxAttackTokens = 1;
 	bool locked = false;
 
 	FTimerHandle UnlockDelayTimer;

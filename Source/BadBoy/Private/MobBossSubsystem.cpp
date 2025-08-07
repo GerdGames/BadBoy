@@ -8,6 +8,7 @@ bool UMobBossSubsystem::TryToTakeAttackToken()
 	if (attackTokenCount > 0)
 	{
 		attackTokenCount--;
+		UE_LOG(LogTemp, Warning, TEXT("Available Tokens: %d MaxTokens: %d"), attackTokenCount, maxAttackTokens);
 		return true;
 	}
 	else
@@ -26,6 +27,7 @@ bool UMobBossSubsystem::ReturnAttackToken()
 	else
 	{
 		attackTokenCount++;
+		UE_LOG(LogTemp, Warning, TEXT("Available Tokens: %d MaxTokens: %d"), attackTokenCount, maxAttackTokens);
 		return true;
 	}
 }
@@ -62,6 +64,22 @@ void UMobBossSubsystem::DelayedUnlock(float lockTime)
 
 bool UMobBossSubsystem::SetMaxTokens(int newMaxTokens)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Updating Max Tokens from: %d to %d"), maxAttackTokens, newMaxTokens);
+
+	if (maxAttackTokens < newMaxTokens)
+	{
+		attackTokenCount += newMaxTokens - maxAttackTokens;
+		UE_LOG(LogTemp, Warning, TEXT("Adding %d Tokens to available count"), (newMaxTokens - maxAttackTokens));
+	}
+
+	else if(maxAttackTokens > newMaxTokens){
+		if (attackTokenCount > newMaxTokens)
+		{
+			attackTokenCount = newMaxTokens;
+			UE_LOG(LogTemp, Warning, TEXT("Reducing Max Tokens to %d"), (newMaxTokens));
+		}
+	}
+
 	maxAttackTokens = newMaxTokens;
 	return true;
 }
