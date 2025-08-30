@@ -19,6 +19,7 @@ private:
 	int attackTokenCount = 1;
 	int maxAttackTokens = 1;
 	bool locked = false;
+	TArray<AActor*> EnemyActors;
 
 	FTimerHandle UnlockDelayTimer;
 
@@ -40,5 +41,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set Max Attack Tokens"), Category = "Attack Token")
 	bool SetMaxTokens(int newMaxTokens);
-	
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Add Actor to Enemy Registry"), Category = "Enemy Management")
+	bool addActorToRegistry(AActor* actor);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Remove Actor from Enemy Registry"), Category = "Enemy Management")
+	bool removeActorFromRegistry(AActor* actor);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Check For Enemy In Range"), Category = "Enemy Management")
+	bool checkForEnemyInRange(AActor* startActor, float range);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Separation Vector From Enemies"), Category = "Enemy Management")
+	FVector getSeparationVectorFromEnemies(AActor* startActor, float separationRange);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Closest Enemy In Direction"), Category = "Lock On")
+	AActor* getClosestEnemyInDirection(AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset);
 };
