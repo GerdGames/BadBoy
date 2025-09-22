@@ -40,7 +40,7 @@ public:
 	AActor* getNextTargetInDirection(AActor* StartActor, FVector SearchDirection);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Closest LockOn Target In Direction"), Category = "Lock On")
-	AActor* getClosestTargetInDirection(AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset);
+	AActor* getClosestTargetInDirection(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Viable LockOn Targets"), Category = "Lock On")
 	TArray<AActor*> getViableLockOnTargets(FVector searchStart, float maxDistance);

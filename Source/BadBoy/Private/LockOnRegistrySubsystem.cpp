@@ -102,18 +102,18 @@ AActor* ULockOnRegistrySubsystem::getNextTargetInDirection(AActor* StartActor, F
 	return bestFit;
 }
 
-AActor* ULockOnRegistrySubsystem::getClosestTargetInDirection(AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset)
+AActor* ULockOnRegistrySubsystem::getClosestTargetInDirection(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset)
 {
 	AActor* bestFit = nullptr;
 	float bestDistance = 10000000;
 
 	FVector searchStart = StartActor->GetActorLocation() + (startOffset * SearchDirection);
 
-	TArray<AActor*> viableTargets = getViableLockOnTargets(StartActor->GetActorLocation(), maxDistance);
+	TArray<AActor*> viableTargets = getViableLockOnTargets(PlayerActor->GetActorLocation(), maxDistance);
 
 	for (AActor* actor : viableTargets)
 	{
-		if (actor != StartActor)
+		if (actor != StartActor && actor != PlayerActor)
 		{
 			FVector VectorToActor = (actor->GetActorLocation() - searchStart);
 			VectorToActor.Normalize();
