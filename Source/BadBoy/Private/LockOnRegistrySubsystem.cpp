@@ -105,7 +105,7 @@ AActor* ULockOnRegistrySubsystem::getNextTargetInDirection(AActor* StartActor, F
 AActor* ULockOnRegistrySubsystem::getClosestTargetInDirection(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset)
 {
 	AActor* bestFit = nullptr;
-	float bestDistance = 10000000;
+	float bestAngle = 360;
 
 	FVector searchStart = StartActor->GetActorLocation() + (startOffset * SearchDirection);
 
@@ -115,19 +115,32 @@ AActor* ULockOnRegistrySubsystem::getClosestTargetInDirection(AActor* PlayerActo
 	{
 		if (actor != StartActor && actor != PlayerActor)
 		{
-			FVector VectorToActor = (actor->GetActorLocation() - searchStart);
+			//get vector between the current target and the next one, to ensure it's in the correct dir
+			FVector VectorToActor = (actor->GetActorLocation() - StartActor->GetActorLocation());
 			VectorToActor.Normalize();
 
 			float angle = getAngleDifferenceBetween2Vectors(VectorToActor, SearchDirection);
 
-			if (angle <= angleTolerance)
+			if (true)//angle <= angleTolerance)
 			{
-				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+				//get vector from player to current target
+				FVector VectorPlayerToTarget = (StartActor->GetActorLocation() - PlayerActor->GetActorLocation());
+				VectorPlayerToTarget.Normalize();
 
-				if (distance < bestDistance)
+				//get vector from player to potential target
+				FVector VectorPlayerToCandidate = (actor->GetActorLocation() - PlayerActor->GetActorLocation());
+				VectorPlayerToCandidate.Normalize();
+
+				//get the difference between them
+				float targetDiffAngle = getAngleDifferenceBetween2Vectors(VectorPlayerToTarget, VectorPlayerToCandidate);
+				//UE_LOG(LogTemp, Warning, TEXT("Angle Difference: %f"), targetDiffAngle);
+
+				if (targetDiffAngle < bestAngle)
 				{
-					bestDistance = distance;
+					bestAngle = targetDiffAngle;
 					bestFit = actor;
+
+					//UE_LOG(LogTemp, Warning, TEXT("Selected Actor: %s"), TCHAR_TO_UTF8(*actor->GetName()));
 				}
 			}
 		}
