@@ -207,3 +207,138 @@ float ULockOnRegistrySubsystem::getAngleDifferenceBetween2Vectors(FVector vector
 {
 	return FMath::RadiansToDegrees(FMath::Acos(vector1 | vector2));
 }
+
+// Prioritizes enemies within angle and range
+// if one is not found, go for the closest enemy in range
+// if none found in range, don't target anything
+AActor* ULockOnRegistrySubsystem::getEnemyForSoftLock(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset)
+{
+	AActor* bestFit = nullptr;
+	AActor* outOfAngleFit = nullptr;
+	float bestDistance = 10000000;
+	float outOfAngleDistance = 10000000;
+
+	FVector searchStart = StartActor->GetActorLocation() + (startOffset * SearchDirection);
+
+	TArray<AActor*> viableTargets = getViableLockOnTargets(PlayerActor->GetActorLocation(), maxDistance);
+
+	for (AActor* actor : viableTargets)
+	{
+		if (actor != StartActor)
+		{
+			FVector VectorToActor = (actor->GetActorLocation() - searchStart);
+			VectorToActor.Normalize();
+
+			float angle = FMath::RadiansToDegrees(FMath::Acos(VectorToActor | SearchDirection));
+
+			if (angle <= angleTolerance)
+			{
+				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+
+				if (distance < bestDistance)
+				{
+					bestDistance = distance;
+					bestFit = actor;
+				}
+			}
+			// if there isn't a fit in the angle yet
+			else if (bestFit == nullptr)
+			{
+				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+
+				if (distance < outOfAngleDistance)
+				{
+					outOfAngleDistance = distance;
+					outOfAngleFit = actor;
+				}
+			}
+		}
+	}
+
+	if (bestFit == nullptr)
+	{
+		if (outOfAngleFit == nullptr)
+		{
+			return nullptr;
+		}
+		else
+		{
+			return outOfAngleFit;
+		}
+	}
+	else
+	{
+		return bestFit;
+	}
+}
+
+// Prioritizes enemies within angle and range
+// if one is not found, go for the closest enemy 
+// always target something as long as there is something to target
+AActor* ULockOnRegistrySubsystem::getEnemyForHardLock(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset)
+{
+	AActor* bestFit = nullptr;
+	AActor* outOfAngleFit = nullptr;
+	float bestDistance = 10000000;
+	float outOfAngleDistance = 10000000;
+
+	FVector searchStart = StartActor->GetActorLocation() + (startOffset * SearchDirection);
+
+	TArray<AActor*> viableTargets = getViableLockOnTargets(PlayerActor->GetActorLocation(), maxDistance);
+
+	for (AActor* actor : viableTargets)
+	{
+		if (actor != StartActor)
+		{
+			FVector VectorToActor = (actor->GetActorLocation() - searchStart);
+			VectorToActor.Normalize();
+
+			float angle = FMath::RadiansToDegrees(FMath::Acos(VectorToActor | SearchDirection));
+
+			if (angle <= angleTolerance)
+			{
+				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+
+				if (distance < bestDistance)
+				{
+					bestDistance = distance;
+					bestFit = actor;
+				}
+			}
+			// if there isn't a fit in the angle yet
+			else if (bestFit == nullptr)
+			{
+				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+
+				if (distance < outOfAngleDistance)
+				{
+					outOfAngleDistance = distance;
+					outOfAngleFit = actor;
+				}
+			}
+		}
+	}
+
+	if (bestFit == nullptr)
+	{
+		if (outOfAngleFit == nullptr)
+		{
+			if (viableTargets[0] == nullptr)
+			{
+				return nullptr;
+			}
+			else
+			{
+				return viableTargets[0];
+			}
+		}
+		else
+		{
+			return outOfAngleFit;
+		}
+	}
+	else
+	{
+		return bestFit;
+	}
+}
