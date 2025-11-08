@@ -213,6 +213,7 @@ float ULockOnRegistrySubsystem::getAngleDifferenceBetween2Vectors(FVector vector
 // if none found in range, don't target anything
 AActor* ULockOnRegistrySubsystem::getEnemyForSoftLock(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset)
 {
+
 	AActor* bestFit = nullptr;
 	AActor* outOfAngleFit = nullptr;
 	float bestDistance = 10000000;
@@ -313,6 +314,92 @@ AActor* ULockOnRegistrySubsystem::getEnemyForHardLock(AActor* PlayerActor, AActo
 				if (distance < outOfAngleDistance)
 				{
 					outOfAngleDistance = distance;
+					outOfAngleFit = actor;
+				}
+			}
+		}
+	}
+
+	if (bestFit == nullptr)
+	{
+		if (outOfAngleFit == nullptr)
+		{
+			if (viableTargets[0] == nullptr)
+			{
+				return nullptr;
+			}
+			else
+			{
+				return viableTargets[0];
+			}
+		}
+		else
+		{
+			return outOfAngleFit;
+		}
+	}
+	else
+	{
+		return bestFit;
+	}
+}
+
+// Get first enemy in a direction
+// prioritize small movement in a direction
+// If no enemy in direction, get the closest enemy
+// Distance shouldn't matter much
+AActor* ULockOnRegistrySubsystem::getEnemyForChangeTarget(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset)
+{
+	AActor* bestFit = nullptr;
+	AActor* outOfAngleFit = nullptr;
+	float bestAngle = 360;
+	float outOfAngleAngle = 360;
+
+	FVector searchStart = StartActor->GetActorLocation() + (startOffset * SearchDirection);
+
+	TArray<AActor*> viableTargets = getViableLockOnTargets(PlayerActor->GetActorLocation(), maxDistance);
+
+	for (AActor* actor : viableTargets)
+	{
+		if (actor != StartActor)
+		{
+			//get vector between the current target and the next one, to ensure it's in the correct dir
+			FVector VectorToActor = (actor->GetActorLocation() - StartActor->GetActorLocation());
+			VectorToActor.Normalize();
+
+			//difference between the vector to the actor, and the search direction
+			float angle = getAngleDifferenceBetween2Vectors(VectorToActor, SearchDirection);
+
+			//get vector from player to current target
+			FVector VectorPlayerToTarget = (StartActor->GetActorLocation() - PlayerActor->GetActorLocation());
+			VectorPlayerToTarget.Normalize();
+
+			//get vector from player to potential target
+			FVector VectorPlayerToCandidate = (actor->GetActorLocation() - PlayerActor->GetActorLocation());
+			VectorPlayerToCandidate.Normalize();
+
+			//get the difference between them
+			float targetDiffAngle = getAngleDifferenceBetween2Vectors(VectorPlayerToTarget, VectorPlayerToCandidate);
+			//UE_LOG(LogTemp, Warning, TEXT("Angle Difference: %f"), targetDiffAngle);
+
+			if (angle <= angleTolerance)
+			{
+				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+
+				if (targetDiffAngle < bestAngle)
+				{
+					bestAngle = targetDiffAngle;
+					bestFit = actor;
+				}
+			}
+			// if there isn't a fit in the angle yet
+			else if (bestFit == nullptr)
+			{
+				double distance = FVector::Distance(searchStart, actor->GetActorLocation());
+
+				if (targetDiffAngle < outOfAngleAngle)
+				{
+					bestAngle = targetDiffAngle;
 					outOfAngleFit = actor;
 				}
 			}

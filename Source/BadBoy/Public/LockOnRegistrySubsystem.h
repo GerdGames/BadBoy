@@ -54,5 +54,8 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Enemy For Hard Lock"), Category = "Lock On")
 	AActor* getEnemyForHardLock(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset);
 
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Enemy For Change Target"), Category = "Lock On")
+	AActor* getEnemyForChangeTarget(AActor* PlayerActor, AActor* StartActor, FVector SearchDirection, float maxDistance, float angleTolerance, float startOffset);
+
 	float getAngleDifferenceBetween2Vectors(FVector vector1, FVector vector2);
 };
