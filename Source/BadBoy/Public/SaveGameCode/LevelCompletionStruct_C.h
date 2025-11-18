@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/UserDefinedStruct.h"
-#include <FoodDataStruct.h>
+//#include <FoodDataStruct.h>
 #include "LevelCompletionStruct_C.generated.h"
 
 /**

@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include <LevelCompletionStruct_C.h>
+#include <SaveGameCode/LevelCompletionStruct_C.h>
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include <MoveUnlockStruct.h>
-#include <Episode.h>
+#include <SaveGameCode/MoveUnlockStruct.h>
+#include <SaveGameCode/Episode.h>
 #include "Badboy_SaveGame_FunctionLibrary.generated.h"
 
 /**

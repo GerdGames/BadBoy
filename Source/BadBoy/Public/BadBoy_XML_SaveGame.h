@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
-#include "XmlString.h"
-#include <MoveUnlockStruct.h>
-#include <LevelCompletionStruct_C.h>
-#include <Episode.h>
+//#include "XmlString.h"
+#include <XmlFile.h>
+#include <XmlNode.h>
+#include <SaveGameCode/MoveUnlockStruct.h>
+#include <SaveGameCode/LevelCompletionStruct_C.h>
+#include <SaveGameCode/Episode.h>
 #include "BadBoy_XML_SaveGame.generated.h"
 
 

@@ -10,5 +10,8 @@ public class BadBoyEditorTarget : TargetRules
 		Type = TargetType.Editor;
 
 		ExtraModuleNames.AddRange( new string[] { "BadBoy" } );
-	}
+
+		DefaultBuildSettings = BuildSettingsVersion.V6;
+
+    }
 }

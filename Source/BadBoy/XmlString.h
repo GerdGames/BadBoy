@@ -1,5 +1,5 @@
-#include "XmlParser/Public/XmlFile.h"
-#include "XmlParser/Public/XmlNode.h"
+#include <XmlFile.h>
+#include <XmlNode.h>
 //#include "XmlString.generated.h"
 
 class BADBOY_API XmlString : public FXmlFile

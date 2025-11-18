@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/UserDefinedStruct.h"
-#include <LevelCompletionStruct_C.h>
+#include <SaveGameCode/LevelCompletionStruct_C.h>
 #include "Episode.generated.h"
 
 
