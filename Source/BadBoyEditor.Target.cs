@@ -7,7 +7,8 @@ public class BadBoyEditorTarget : TargetRules
 {
 	public BadBoyEditorTarget(TargetInfo Target) : base(Target)
 	{
-		Type = TargetType.Editor;
+        DefaultBuildSettings = BuildSettingsVersion.Latest;
+        Type = TargetType.Editor;
 
 		ExtraModuleNames.AddRange( new string[] { "BadBoy" } );
 

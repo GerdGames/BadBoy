@@ -7,7 +7,8 @@ public class BadBoyTarget : TargetRules
 {
 	public BadBoyTarget(TargetInfo Target) : base(Target)
 	{
-		Type = TargetType.Game;
+        DefaultBuildSettings = BuildSettingsVersion.Latest;
+        Type = TargetType.Game;
 
 		ExtraModuleNames.AddRange( new string[] { "BadBoy" } );
 	}
