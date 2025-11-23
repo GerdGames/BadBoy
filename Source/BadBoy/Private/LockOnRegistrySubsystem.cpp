@@ -410,7 +410,7 @@ AActor* ULockOnRegistrySubsystem::getEnemyForChangeTarget(AActor* PlayerActor, A
 	{
 		if (outOfAngleFit == nullptr)
 		{
-			if (viableTargets[0] == nullptr)
+			if (viableTargets.Num() <= 0)
 			{
 				return nullptr;
 			}
